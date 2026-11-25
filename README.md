@@ -2,6 +2,9 @@
 
 基于 **ROS 2 Humble + TurtleBot3 Burger** 的「地老鼠（MicroMouse）走迷宫」简易仿真项目。机器人依靠激光雷达与里程计，采用**左墙跟随（left-hand rule）**策略在 Gazebo 自定义迷宫中自主通行，并在 RViz2 中实时显示行驶轨迹。
 
+课程代码:(2026-2027-1)-S0610350-03
+
+
 ## ✨ 功能特性
 
 - **自定义迷宫世界**：`worlds/z_maze.world`，蛇形通道布局，墙体均设置 `static=true` 与 `<collision>` 碰撞属性，小车不会穿墙；带蓝色起点、绿色终点标记。
@@ -12,14 +15,14 @@
 
 ## 🛠 环境要求
 
-| 项目        | 版本 / 说明                                                         |
-| --------- | --------------------------------------------------------------- |
-| 操作系统      | Ubuntu 22.04                                                    |
-| ROS       | ROS 2 Humble                                                    |
-| 仿真器       | Gazebo Classic（配合 `gazebo_ros`）                                 |
-| 机器人       | TurtleBot3 Burger（`turtlebot3_gazebo`、`turtlebot3_description`） |
-| 可视化       | RViz2                                                           |
-| Python 依赖 | `rclpy`、`numpy`、`geometry_msgs`、`nav_msgs`、`sensor_msgs`        |
+| 项目        | 版本 / 说明                                                            |
+| ----------- | ---------------------------------------------------------------------- |
+| 操作系统    | Ubuntu 22.04                                                           |
+| ROS         | ROS 2 Humble                                                           |
+| 仿真器      | Gazebo Classic（配合 `gazebo_ros`）                                  |
+| 机器人      | TurtleBot3 Burger（`turtlebot3_gazebo`、`turtlebot3_description`） |
+| 可视化      | RViz2                                                                  |
+| Python 依赖 | `rclpy`、`numpy`、`geometry_msgs`、`nav_msgs`、`sensor_msgs` |
 
 ## 📁 目录结构
 
@@ -89,20 +92,20 @@ ros2 run maze_control tb3_waypoints        # 航点跟踪（走迷宫项目用�
 
 ## 🧠 节点与话题说明
 
-| 节点                  | 订阅              | 发布                       | 功能          |
-| ------------------- | --------------- | ------------------------ | ----------- |
-| `tb3_wall_follower` | `/scan`、`/odom` | `/cmd_vel`、`/robot_path` | 左墙跟随主算法     |
-| `scan_region_node`  | `/scan`         | （终端日志）                   | 前/左/右区域距离提取 |
-| `tb3_waypoints`     | `/odom`         | `/cmd_vel`、`/robot_path` | 航点序列 P 跟踪   |
+| 节点                  | 订阅                 | 发布                          | 功能                 |
+| --------------------- | -------------------- | ----------------------------- | -------------------- |
+| `tb3_wall_follower` | `/scan`、`/odom` | `/cmd_vel`、`/robot_path` | 左墙跟随主算法       |
+| `scan_region_node`  | `/scan`            | （终端日志）                  | 前/左/右区域距离提取 |
+| `tb3_waypoints`     | `/odom`            | `/cmd_vel`、`/robot_path` | 航点序列 P 跟踪      |
 
 **左墙跟随控制逻辑**（`control_loop`，10 Hz）：
 
-| 条件                            | 动作                    |
-| ----------------------------- | --------------------- |
+| 条件                                  | 动作                                  |
+| ------------------------------------- | ------------------------------------- |
 | 前方距离 < `front_danger`（0.35 m） | 线速度 0，角速度 `-w`，原地右转避障 |
-| 左侧距离 > `target_left + 0.1`    | 前进并以 `+0.4` 左转靠近墙     |
-| 左侧距离 < `target_left - 0.1`    | 前进并以 `-0.3` 右转远离墙     |
-| 其余（距离合适）                      | 以 `v=0.15 m/s` 直行     |
+| 左侧距离 > `target_left + 0.1`      | 前进并以 `+0.4` 左转靠近墙          |
+| 左侧距离 < `target_left - 0.1`      | 前进并以 `-0.3` 右转远离墙          |
+| 其余（距离合适）                      | 以 `v=0.15 m/s` 直行                |
 
 主要参数在 `tb3_wall_follower.py` 的 `__init__` 中硬编码：`target_left=0.4`、`front_danger=0.35`、`v=0.15`、`w=0.6`，可按需调整。
 
@@ -136,4 +139,4 @@ ros2 run maze_control tb3_waypoints        # 航点跟踪（走迷宫项目用�
 
 `setup.py` 中另注册了 `tb3_point2point`、`tb3_avoid` 两个入口，但仓库当前未包含对应源文件；如需使用请自行补充，或删除这两行注册项。
 
-
+课程代码:(2026-2027-1)-S0610350-03
