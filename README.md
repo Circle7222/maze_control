@@ -135,5 +135,4 @@ ros2 run maze_control tb3_waypoints        # 航点跟踪（走迷宫项目用�
 ## 📝 备注
 
 `setup.py` 中另注册了 `tb3_point2point`、`tb3_avoid` 两个入口，但仓库当前未包含对应源文件；如需使用请自行补充，或删除这两行注册项。
-
-
+课程代码:(2026-2027-1)-S0610350-03
